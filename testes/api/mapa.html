@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mapa de Coleta de Reciclagem</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 400px; }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+
+var coordenadas = [
+      [-22.4689, -44.4467],
+      [-22.4753, -44.4501],
+      [-22.4625, -44.4398],
+      [-22.4712, -44.4576],
+      [-22.4800, -44.4300],
+      [-22.4650, -44.4650],
+      [-22.4550, -44.4450],
+      [-22.4700, -44.4200],
+      [-22.4600, -44.4600],
+      [-22.4850, -44.4400]
+    ];
+
+
+    // Inicializa o mapa
+    var map = L.map('map').setView([-22.4689, -44.4467], 13); // Coordenadas de São Paulo
+
+    // Adiciona o tile layer do OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Adiciona um marcador
+    coordenadas.forEach(function(coord){
+        L.marker(coord).addTo(map).bindPopup("Ponto de coleta de reciclagem.");
+    })
+  </script>
+</body>
+</html>

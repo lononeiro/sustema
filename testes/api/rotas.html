@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rota do Caminhão de Coleta</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+  <style>
+    #map { height: 500px; }
+  </style>
+</head>
+<body>
+    <div>
+        <div class="formulario">
+            <label>Bairro</label>
+            <input type="text" id="Bairro">
+            <label>Rua</label>
+            <input type="text" id="Rua">
+            <label>Número</label>
+            <input type="text" id="Numero">
+        </div>
+    </div>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+  <script>
+    // Inicializa o mapa
+    var map = L.map('map').setView([-22.4689, -44.4467], 13);
+
+    // Adiciona o tile layer do OpenStreetMap
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Desabilita interações que poderiam modificar a rota
+    map.off('click');
+    map.on('click', function() {
+      console.log('Clique no mapa desabilitado.');
+    });
+
+    // Mantém apenas interações básicas
+    map.doubleClickZoom.enable();
+    map.scrollWheelZoom.enable();
+    map.dragging.enable();
+
+    // Coordenadas dos pontos de coleta
+    var pontosDeColeta = [
+      { coords: [-22.4689, -44.4467], descricao: "Ponto de coleta 1" },
+      { coords: [-22.4753, -44.4501], descricao: "Ponto de coleta 2" },
+      { coords: [-22.4625, -44.4398], descricao: "Ponto de coleta 3" },
+      { coords: [-22.4712, -44.4576], descricao: "Ponto de coleta 4" },
+      { coords: [-22.4800, -44.4300], descricao: "Ponto de coleta 5" }
+    ];
+
+    // Adiciona marcadores para cada ponto de coleta
+    pontosDeColeta.forEach(function(ponto) {
+      L.marker(ponto.coords).addTo(map)
+        .bindPopup(ponto.descricao);
+    });
+
+    // Configura a rota usando Leaflet Routing Machine
+    var waypoints = pontosDeColeta.map(function(ponto) {
+      return L.latLng(ponto.coords[0], ponto.coords[1]);
+    });
+
+    L.Routing.control({
+      waypoints: waypoints,
+      routeWhileDragging: false, // Impede alterações na rota enquanto arrasta
+      draggableWaypoints: false, // Impede que os pontos da rota sejam movidos
+      addWaypoints: false, // Impede que novos pontos sejam adicionados
+      show: false // Oculta o painel de instruções
+    }).addTo(map);
+  </script>
+</body>
+</html>
