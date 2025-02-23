@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Geocodificação com Nominatim</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map { height: 500px; }
+    #listaEnderecos { list-style: none; padding: 0; margin-top: 20px; }
+    #listaEnderecos li { padding: 8px; border-bottom: 1px solid #ccc; display: flex; justify-content: space-between; align-items: center; }
+    .excluir { color: red; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <div>
+    <input type="text" id="endereco" placeholder="Digite um endereço">
+    <button onclick="geocodificarEndereco()">Buscar Coordenadas</button>
+  </div>
+  <div id="map"></div>
+  <div>
+    <h3>Endereços Cadastrados</h3>
+    <ul id="listaEnderecos"></ul>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="scripts/openstreetmap.js"></script>
+  <script src="scripts/adressHandler.js"></script>
+  <script src="scripts/initializeMap.js"></script>
+  
+  <script>
+    initializeMap()
+  </script>
+</body>
+</html>
